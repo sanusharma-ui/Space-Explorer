@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🇮🇳 ISRO Missions - Space Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px #66fcf1; }
+      100% { text-shadow: 0 0 20px #66fcf1, 0 0 30px #66fcf1; }
+    }
+    .animate-glow {
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+    body {
+      background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .glass-card {
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(102, 252, 241, 0.3);
+      border-radius: 1rem;
+    }
+    .mission-item {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(102, 252, 241, 0.2);
+      transition: all 0.3s ease;
+    }
+    .mission-item:hover {
+      box-shadow: 0 0 20px rgba(102, 252, 241, 0.4);
+      transform: translateY(-5px);
+    }
+    .navbar-link {
+      @apply relative;
+    }
+    .navbar-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #66fcf1;
+      transition: width 0.3s ease;
+    }
+    .navbar-link:hover::after,
+    .navbar-link.active::after {
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="text-white font-sans min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md border-b border-teal-500/30 z-50 px-4 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <h1 class="text-2xl font-bold text-teal-300 animate-glow">🚀 Space Dashboard</h1>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="index.html" class="navbar-link hover:text-teal-400 transition text-white">Home</a>
+        <a href="apod.html" class="navbar-link hover:text-teal-400 transition text-white">APOD</a>
+        <a href="news.html" class="navbar-link hover:text-teal-400 transition text-white">News</a>
+        <a href="iss.html" class="navbar-link hover:text-teal-400 transition text-white">ISS</a>
+        <a href="starmap.html" class="navbar-link hover:text-teal-400 transition text-white">Star Map</a>
+        <a href="isro-missions.html" class="navbar-link hover:text-teal-400 transition text-white active:text-teal-300 border-b-2 border-teal-300">ISRO Missions</a>
+        <a href="voyager.html" class="navbar-link hover:text-teal-400 transition text-white">Voyager</a>
+        <a href="telescopes.html" class="navbar-link hover:text-teal-400 transition text-white">Telescopes</a>
+      </div>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden text-teal-300 hover:text-teal-400">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 px-2 pb-4 bg-black/90 rounded-lg">
+      <a href="index.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Home</a>
+      <a href="apod.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">APOD</a>
+      <a href="news.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">News</a>
+      <a href="iss.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">ISS</a>
+      <a href="starmap.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Star Map</a>
+      <a href="isro-missions.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link active:border-b-2 border-teal-300">ISRO Missions</a>
+      <a href="voyager.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Voyager</a>
+      <a href="telescopes.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Telescopes</a>
+    </div>
+  </nav>
+
+  <!-- Spacer for fixed navbar -->
+  <div class="pt-20"></div>
+
+  <!-- Main Content -->
+  <main class="px-4 py-10 max-w-6xl mx-auto">
+    <h1 class="text-3xl md:text-4xl font-bold text-teal-300 text-center mb-8 animate-glow">🇮🇳 ISRO Current & Upcoming Missions</h1>
+    <div id="missions" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-black/80 text-gray-400 text-center py-4 text-sm border-t border-teal-500/20">
+    &copy; Made with ❤️ for space lovers.
+  </footer>
+
+  <!-- Script -->
+  <script>
+    const missions = [
+      { name: 'LVM3-M6 / BlueBird-6', date: 'Dec 24, 2025', desc: 'Commercial launch of US BlueBird satellite for communication constellation.', status: 'Upcoming' },
+      { name: 'Gaganyaan 1', date: 'Q4 2025', desc: 'Uncrewed test flight for India\'s human spaceflight program with Vyommitra robot.', status: 'Upcoming' },
+      { name: 'PSLV-C62', date: 'Mid/Late Dec 2025', desc: 'Return to flight mission with undisclosed payload.', status: 'Upcoming' },
+      { name: 'NISAR', date: 'Jul 30, 2025', desc: 'NASA-ISRO Synthetic Aperture Radar for Earth observation.', status: 'Active' },
+      { name: 'CMS-03', date: 'Nov 2, 2025', desc: 'Communication satellite for multi-media services.', status: 'Active' },
+      { name: 'EOS-09', date: 'May 18, 2025', desc: 'Earth observation satellite for radar imaging.', status: 'Active' },
+      { name: 'NVS-02', date: 'Jan 29, 2025', desc: 'Navigation satellite for NavIC system.', status: 'Active' },
+      { name: 'SPADEX', date: 'Dec 30, 2024 (Docked Jan 2025)', desc: 'Space Docking Experiment demonstrating docking and power transfer.', status: 'Completed' }
+    ];
+    document.getElementById('missions').innerHTML = missions.map(m => `
+      <div class="mission-item glass-card p-4 rounded-xl">
+        <h2 class="text-xl font-semibold text-teal-300 mb-2">${m.name}</h2>
+        <p class="text-gray-300 mb-2">Date: ${m.date}</p>
+        <p class="text-sm text-gray-400">${m.desc}</p>
+        <span class="inline-block mt-2 px-2 py-1 rounded text-xs ${m.status === 'Upcoming' ? 'bg-yellow-500/20 text-yellow-300' : m.status === 'Active' ? 'bg-green-500/20 text-green-300' : 'bg-gray-500/20 text-gray-300'}">${m.status}</span>
+      </div>
+    `).join('');
+
+    // Mobile Menu
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

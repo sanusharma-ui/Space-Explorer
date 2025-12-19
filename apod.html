@@ -4,81 +4,126 @@
   <meta charset="UTF-8">
   <title>NASA APOD - Space Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @keyframes glow {
-      0% {
-        text-shadow: 0 0 10px #66fcf1;
-      }
-      100% {
-        text-shadow: 0 0 20px #66fcf1, 0 0 30px #66fcf1;
-      }
+      0% { text-shadow: 0 0 10px #66fcf1; }
+      100% { text-shadow: 0 0 20px #66fcf1, 0 0 30px #66fcf1; }
     }
-
     .animate-glow {
       animation: glow 1.5s ease-in-out infinite alternate;
     }
-
     body {
-      background: radial-gradient(circle at top, #000000, #0f0f0f, #050505);
+      background: url('https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0') no-repeat center center fixed;
+      background-size: cover;
     }
-
     .glass-card {
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(102, 252, 241, 0.15);
-      border-radius: 0.75rem;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(102, 252, 241, 0.3);
+      border-radius: 1rem;
       padding: 1.5rem;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
     }
-
     .hover-glow:hover {
       box-shadow: 0 0 15px rgba(102, 252, 241, 0.3), 0 0 30px rgba(102, 252, 241, 0.2);
+    }
+    .navbar-link {
+      @apply relative;
+    }
+    .navbar-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #66fcf1;
+      transition: width 0.3s ease;
+    }
+    .navbar-link:hover::after,
+    .navbar-link.active::after {
+      width: 100%;
     }
   </style>
 </head>
 <body class="text-white font-sans min-h-screen flex flex-col">
-
-  <!-- Navigation -->
-  <nav class="bg-black text-teal-300 px-6 py-4 shadow-md flex flex-wrap justify-center gap-6 text-lg border-b border-teal-500/10">
-    <a href="index.html" class="hover:underline">Home</a>
-    <a href="apod.html" class="hover:underline font-semibold">NASA APOD</a>
-    <a href="news.html" class="hover:underline">Space News</a>
-    <a href="iss.html" class="hover:underline">ISS Tracker</a>
-    <a href="starmap.html" class="hover:underline">Star Map</a>
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md border-b border-teal-500/30 z-50 px-4 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <h1 class="text-2xl font-bold text-teal-300 animate-glow">🚀 Space Dashboard</h1>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="index.html" class="navbar-link hover:text-teal-400 transition text-white">Home</a>
+        <a href="apod.html" class="navbar-link hover:text-teal-400 transition text-white active:text-teal-300 border-b-2 border-teal-300">APOD</a>
+        <a href="news.html" class="navbar-link hover:text-teal-400 transition text-white">News</a>
+        <a href="iss.html" class="navbar-link hover:text-teal-400 transition text-white">ISS</a>
+        <a href="starmap.html" class="navbar-link hover:text-teal-400 transition text-white">Star Map</a>
+        <a href="isro-missions.html" class="navbar-link hover:text-teal-400 transition text-white">ISRO Missions</a>
+        <a href="voyager.html" class="navbar-link hover:text-teal-400 transition text-white">Voyager</a>
+        <a href="telescopes.html" class="navbar-link hover:text-teal-400 transition text-white">Telescopes</a>
+      </div>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden text-teal-300 hover:text-teal-400">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 px-2 pb-4 bg-black/90 rounded-lg">
+      <a href="index.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Home</a>
+      <a href="apod.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link active:border-b-2 border-teal-300">APOD</a>
+      <a href="news.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">News</a>
+      <a href="iss.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">ISS</a>
+      <a href="starmap.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Star Map</a>
+      <a href="isro-missions.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">ISRO Missions</a>
+      <a href="voyager.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Voyager</a>
+      <a href="telescopes.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Telescopes</a>
+    </div>
   </nav>
+
+  <!-- Spacer for fixed navbar -->
+  <div class="pt-20"></div>
 
   <!-- APOD Section -->
   <main class="flex-grow px-6 py-10 max-w-4xl mx-auto">
-    <section id="apod" class="glass-card animate-fade-in">
+    <section id="apod" class="glass-card animate-glow">
       <h1 class="text-3xl md:text-4xl font-bold text-teal-300 animate-glow mb-4">🌠 Astronomy Picture of the Day</h1>
       <p class="text-gray-300 mb-6">Loading today's picture...</p>
     </section>
 
     <!-- Search by Date -->
-    <section class="mt-12">
+    <section class="mt-12 glass-card">
       <h2 class="text-2xl font-semibold text-teal-200 mb-4">🔍 Search by Date</h2>
       <div class="flex flex-col sm:flex-row gap-4 items-center">
         <input type="date" id="apodDate" class="px-4 py-2 rounded-lg text-black w-full sm:w-auto">
-        <button onclick="searchAPOD()" class="bg-teal-500 hover:bg-teal-600 transition px-6 py-2 rounded-lg text-white font-semibold">
+        <button onclick="searchAPOD()" class="bg-teal-500 hover:bg-teal-600 transition px-6 py-2 rounded-lg text-white font-semibold hover-glow">
           Search
         </button>
       </div>
       <div id="apodResult" class="mt-8 glass-card"></div>
     </section>
+
+    <!-- Extra Feature: Random APOD -->
+    <section class="mt-12 glass-card">
+      <h2 class="text-2xl font-semibold text-teal-200 mb-4">🎲 Random APOD</h2>
+      <button onclick="randomAPOD()" class="bg-purple-500 hover:bg-purple-600 transition px-6 py-2 rounded-lg text-white font-semibold hover-glow">
+        Surprise Me!
+      </button>
+      <div id="randomResult" class="mt-8 glass-card"></div>
+    </section>
   </main>
 
   <!-- Footer -->
-  <footer class="bg-black text-gray-500 text-center py-4 text-sm border-t border-teal-500/10">
-    ...MAde by SharmaGalactix...
+  <footer class="bg-black/80 text-gray-500 text-center py-4 text-sm border-t border-teal-500/20">
+    &copy; Made with ❤️ for space lovers.
   </footer>
 
   <!-- Script -->
   <script>
     const apiKey = "hBHTCoeFTDRztLCLhr1HWSTkfQurUBZ2VC1kG9cs";
-
     async function getAPOD() {
       const apodDiv = document.getElementById("apod");
       try {
@@ -86,16 +131,16 @@
         const data = await res.json();
         apodDiv.innerHTML = `
           <h1 class="text-3xl md:text-4xl font-bold text-teal-300 animate-glow mb-4">🌠 ${data.title}</h1>
-          ${data.media_type === "image" 
-            ? `<img src="${data.url}" alt="NASA APOD" class="rounded-lg shadow-lg mx-auto">`
+          ${data.media_type === "image"
+            ? `<img src="${data.url}" alt="NASA APOD" class="rounded-lg shadow-lg mx-auto w-full max-h-96 object-cover">`
             : `<iframe src="${data.url}" class="w-full rounded-lg shadow-lg mt-4" height="400" frameborder="0"></iframe>`}
           <p class="text-gray-300 mt-4">${data.explanation}</p>
+          <p class="text-sm text-gray-500 mt-2">Date: ${data.date} | Credit: ${data.copyright || 'NASA'}</p>
         `;
       } catch (error) {
         apodDiv.innerHTML = `<p class="text-red-400">Kuch galat ho gaya: ${error.message}</p>`;
       }
     }
-
     async function searchAPOD() {
       const date = document.getElementById("apodDate").value;
       if (!date) return alert("Please select a date!");
@@ -103,16 +148,34 @@
       const data = await res.json();
       document.getElementById("apodResult").innerHTML = `
         <h2 class="text-xl font-semibold text-teal-300 mb-3">${data.title}</h2>
-        ${data.media_type === "image" 
-          ? `<img src="${data.url}" class="rounded-lg shadow-lg mx-auto">`
+        ${data.media_type === "image"
+          ? `<img src="${data.url}" class="rounded-lg shadow-lg mx-auto w-full max-h-96 object-cover">`
           : `<iframe class="w-full rounded-lg mt-4 shadow-md" height="400" src="${data.url}" frameborder="0"></iframe>`}
         <p class="text-gray-300 mt-4">${data.explanation}</p>
+        <p class="text-sm text-gray-500 mt-2">Date: ${data.date} | Credit: ${data.copyright || 'NASA'}</p>
       `;
     }
-
+    async function randomAPOD() {
+      const randomDate = new Date(1995 + Math.floor(Math.random() * 30), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0];
+      const res = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${randomDate}`);
+      const data = await res.json();
+      document.getElementById("randomResult").innerHTML = `
+        <h2 class="text-xl font-semibold text-teal-300 mb-3">${data.title}</h2>
+        ${data.media_type === "image"
+          ? `<img src="${data.url}" class="rounded-lg shadow-lg mx-auto w-full max-h-96 object-cover">`
+          : `<iframe class="w-full rounded-lg mt-4 shadow-md" height="400" src="${data.url}" frameborder="0"></iframe>`}
+        <p class="text-gray-300 mt-4">${data.explanation}</p>
+        <p class="text-sm text-gray-500 mt-2">Date: ${data.date} | Credit: ${data.copyright || 'NASA'}</p>
+      `;
+    }
     getAPOD();
-  </script>
 
+    // Mobile Menu
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
 </body>
 </html>
-

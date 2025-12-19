@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🔭 Space Telescopes - Space Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px #66fcf1; }
+      100% { text-shadow: 0 0 20px #66fcf1, 0 0 30px #66fcf1; }
+    }
+    .animate-glow {
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+    body {
+      background: url('https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .glass-card {
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(102, 252, 241, 0.3);
+      border-radius: 1rem;
+    }
+    .telescope-item {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(102, 252, 241, 0.2);
+      transition: all 0.3s ease;
+    }
+    .telescope-item:hover {
+      box-shadow: 0 0 20px rgba(102, 252, 241, 0.4);
+      transform: translateY(-5px);
+    }
+    .navbar-link {
+      @apply relative;
+    }
+    .navbar-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #66fcf1;
+      transition: width 0.3s ease;
+    }
+    .navbar-link:hover::after,
+    .navbar-link.active::after {
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="text-white font-sans min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md border-b border-teal-500/30 z-50 px-4 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <h1 class="text-2xl font-bold text-teal-300 animate-glow">🚀 Space Dashboard</h1>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="index.html" class="navbar-link hover:text-teal-400 transition text-white">Home</a>
+        <a href="apod.html" class="navbar-link hover:text-teal-400 transition text-white">APOD</a>
+        <a href="news.html" class="navbar-link hover:text-teal-400 transition text-white">News</a>
+        <a href="iss.html" class="navbar-link hover:text-teal-400 transition text-white">ISS</a>
+        <a href="starmap.html" class="navbar-link hover:text-teal-400 transition text-white">Star Map</a>
+        <a href="isro-missions.html" class="navbar-link hover:text-teal-400 transition text-white">ISRO Missions</a>
+        <a href="voyager.html" class="navbar-link hover:text-teal-400 transition text-white">Voyager</a>
+        <a href="telescopes.html" class="navbar-link hover:text-teal-400 transition text-white active:text-teal-300 border-b-2 border-teal-300">Telescopes</a>
+      </div>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden text-teal-300 hover:text-teal-400">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 px-2 pb-4 bg-black/90 rounded-lg">
+      <a href="index.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Home</a>
+      <a href="apod.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">APOD</a>
+      <a href="news.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">News</a>
+      <a href="iss.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">ISS</a>
+      <a href="starmap.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Star Map</a>
+      <a href="isro-missions.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">ISRO Missions</a>
+      <a href="voyager.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Voyager</a>
+      <a href="telescopes.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link active:border-b-2 border-teal-300">Telescopes</a>
+    </div>
+  </nav>
+
+  <!-- Spacer for fixed navbar -->
+  <div class="pt-20"></div>
+
+  <!-- Main Content -->
+  <main class="px-4 py-10 max-w-6xl mx-auto">
+    <h1 class="text-3xl md:text-4xl font-bold text-teal-300 text-center mb-8 animate-glow">🔭 Major Space Telescopes & Satellites</h1>
+    <div id="telescopes" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-black/80 text-gray-400 text-center py-4 text-sm border-t border-teal-500/20">
+    &copy;  Made with ❤️ for space lovers.
+  </footer>
+
+  <!-- Script -->
+  <script>
+    const telescopes = [
+      { name: 'James Webb Space Telescope (JWST)', launch: '2021', status: 'Active', desc: 'Infrared observatory at L2, recent: Supernova at 730M years old (Dec 2025).', img: 'https://science.nasa.gov/wp-content/uploads/2023/07/jwst-illustration-768.jpg?w=768&h=432&crop=1' },
+      { name: 'Hubble Space Telescope', launch: '1990', status: 'Active (35 years)', desc: 'Optical/UV telescope in LEO, recent: Asteroids colliding (Dec 2025).', img: 'https://science.nasa.gov/wp-content/uploads/2023/07/hubble-illustration-768.jpg?w=768&h=432&crop=1' },
+      { name: 'Aditya-L1 (ISRO)', launch: '2023', status: 'Active', desc: 'Solar observatory at L1, released first data Jan 2025, observing solar storms.', img: 'https://www.isro.gov.in/sites/default/files/aditya-l1.jpg' },
+      { name: 'XPoSat (ISRO)', launch: '2024', status: 'Active', desc: 'X-ray polarimeter satellite for cosmic bursts, data available since Oct 2025.', img: 'https://www.isro.gov.in/sites/default/files/xposat.jpg' },
+      { name: 'AstroSat (ISRO)', launch: '2015', status: 'Active', desc: 'Multi-wavelength observatory (UV, X-ray), ongoing observations.', img: 'https://www.isro.gov.in/sites/default/files/astrosat.jpg' },
+      { name: 'NISAR (NASA-ISRO)', launch: 'Jul 2025', status: 'Active', desc: 'Synthetic Aperture Radar for Earth surface changes, first images Sep 2025.', img: 'https://www.nasa.gov/wp-content/uploads/2025/07/nisar-illustration.jpg' }
+    ];
+    document.getElementById('telescopes').innerHTML = telescopes.map(t => `
+      <div class="telescope-item glass-card p-4 rounded-xl overflow-hidden">
+        ${t.img ? `<img src="${t.img}" alt="${t.name}" class="w-full h-48 object-cover rounded mb-2">` : ''}
+        <h2 class="text-xl font-semibold text-teal-300 mb-2">${t.name}</h2>
+        <p class="text-gray-300 mb-2">Launch: ${t.launch} | Status: <span class="text-green-300">${t.status}</span></p>
+        <p class="text-sm text-gray-400">${t.desc}</p>
+      </div>
+    `).join('');
+
+    // Mobile Menu
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

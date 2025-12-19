@@ -2,120 +2,156 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>🌌 Space Dashboard</title>
+  <title>🚀 Space Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
     @keyframes glow {
       0% { text-shadow: 0 0 10px #66fcf1; }
       100% { text-shadow: 0 0 20px #66fcf1, 0 0 30px #66fcf1; }
     }
-
     .animate-glow {
       animation: glow 1.5s ease-in-out infinite alternate;
     }
-
     body {
-      background: radial-gradient(circle at 20% 20%, #000000, #0f0f0f, #050505);
+      background: url('https://images.unsplash.com/photo-1548625361-58a9b86aa83b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0') no-repeat center center fixed;
+      background-size: cover;
     }
-
     .glass-card {
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(102, 252, 241, 0.2);
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(102, 252, 241, 0.3);
+      border-radius: 1rem;
     }
-
     .hover-glow:hover {
-      box-shadow: 0 0 15px rgba(102, 252, 241, 0.3), 0 0 30px rgba(102, 252, 241, 0.2);
+      box-shadow: 0 0 20px rgba(102, 252, 241, 0.5);
+      transform: scale(1.05);
+    }
+    .navbar-link {
+      @apply relative;
+    }
+    .navbar-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #66fcf1;
+      transition: width 0.3s ease;
+    }
+    .navbar-link:hover::after,
+    .navbar-link.active::after {
+      width: 100%;
     }
   </style>
 </head>
 <body class="text-white min-h-screen flex flex-col font-sans">
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md border-b border-teal-500/30 z-50 px-4 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <h1 class="text-2xl font-bold text-teal-300 animate-glow">🚀 Space Dashboard</h1>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="index.html" class="navbar-link hover:text-teal-400 transition text-white active:text-teal-300">Home</a>
+        <a href="apod.html" class="navbar-link hover:text-teal-400 transition text-white">APOD</a>
+        <a href="news.html" class="navbar-link hover:text-teal-400 transition text-white">News</a>
+        <a href="iss.html" class="navbar-link hover:text-teal-400 transition text-white">ISS</a>
+        <a href="starmap.html" class="navbar-link hover:text-teal-400 transition text-white">Star Map</a>
+        <a href="isro-missions.html" class="navbar-link hover:text-teal-400 transition text-white">ISRO Missions</a>
+        <a href="voyager.html" class="navbar-link hover:text-teal-400 transition text-white">Voyager</a>
+        <a href="telescopes.html" class="navbar-link hover:text-teal-400 transition text-white">Telescopes</a>
+      </div>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden text-teal-300 hover:text-teal-400">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 px-2 pb-4 bg-black/90 rounded-lg">
+      <a href="index.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Home</a>
+      <a href="apod.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">APOD</a>
+      <a href="news.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">News</a>
+      <a href="iss.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">ISS</a>
+      <a href="starmap.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Star Map</a>
+      <a href="isro-missions.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">ISRO Missions</a>
+      <a href="voyager.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Voyager</a>
+      <a href="telescopes.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Telescopes</a>
+    </div>
+  </nav>
 
-  <!-- 🌌 Particles Background -->
-  <div id="particles-js" class="fixed top-0 left-0 w-full h-full -z-10"></div>
+  <!-- Spacer for fixed navbar -->
+  <div class="pt-20"></div>
 
-  <!-- 💫 particles.js -->
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script>
-    particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 120, "density": { "enable": true, "value_area": 900 } },
-        "color": { "value": "#ffffff" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.5 },
-        "size": { "value": 2.5, "random": true },
-        "line_linked": {
-          "enable": true,
-          "distance": 130,
-          "color": "#66fcf1",
-          "opacity": 0.4,
-          "width": 1
-        },
-        "move": { "enable": true, "speed": 1.8 }
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-          "onhover": { "enable": true, "mode": "repulse" },
-          "onclick": { "enable": true, "mode": "push" }
-        },
-        "modes": {
-          "repulse": { "distance": 100 },
-          "push": { "particles_nb": 4 }
-        }
-      },
-      "retina_detect": true
-    });
-  </script>
-
-  <!-- 🚀 Header -->
-  <header class="bg-gradient-to-r from-black via-gray-900 to-black p-6 shadow-lg border-b border-teal-500/10">
+  <!-- Header -->
+  <header class="bg-black/70 backdrop-blur p-6 shadow-lg border-b border-teal-500/20 text-center">
     <h1 class="text-4xl md:text-5xl font-bold text-teal-300 animate-glow">🚀 Space Dashboard</h1>
     <p class="text-gray-400 mt-2 text-sm md:text-base">Explore the Universe — Real-time views, news, and star maps</p>
+    <!-- Extra Feature: Quick Stats -->
+    <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-300">
+      <div class="bg-teal-500/20 px-3 py-1 rounded">🌌 Active Missions: 150+</div>
+      <div class="bg-teal-500/20 px-3 py-1 rounded">🛰️ Satellites: 10,000+</div>
+      <div class="bg-teal-500/20 px-3 py-1 rounded">🔭 Discoveries: Endless</div>
+    </div>
   </header>
 
-  <!-- 📦 Main Content -->
+  <!-- Main Content -->
   <main class="flex-grow flex items-center justify-center p-6">
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-10 max-w-6xl w-full">
-
-      <!-- 🔭 Cards -->
-      <a href="apod.html" class="glass-card hover:bg-opacity-60 transition duration-300 rounded-xl p-6 text-center hover:scale-105 transform shadow-lg hover-glow">
+      <!-- Cards -->
+      <a href="apod.html" class="glass-card hover-glow transition duration-300 rounded-xl p-6 text-center shadow-lg">
         <div class="text-3xl mb-2">🌄</div>
         <h2 class="text-xl font-semibold text-teal-300">NASA APOD</h2>
         <p class="text-gray-300 mt-2 text-sm">See today's Astronomy Picture of the Day</p>
       </a>
-
-      <a href="news.html" class="glass-card hover:bg-opacity-60 transition duration-300 rounded-xl p-6 text-center hover:scale-105 transform shadow-lg hover-glow">
+      <a href="news.html" class="glass-card hover-glow transition duration-300 rounded-xl p-6 text-center shadow-lg">
         <div class="text-3xl mb-2">📰</div>
         <h2 class="text-xl font-semibold text-teal-300">Space News</h2>
         <p class="text-gray-300 mt-2 text-sm">Read latest news from space missions</p>
       </a>
-
-      <a href="iss.html" class="glass-card hover:bg-opacity-60 transition duration-300 rounded-xl p-6 text-center hover:scale-105 transform shadow-lg hover-glow">
+      <a href="iss.html" class="glass-card hover-glow transition duration-300 rounded-xl p-6 text-center shadow-lg">
         <div class="text-3xl mb-2">🛰️</div>
         <h2 class="text-xl font-semibold text-teal-300">ISS Tracker</h2>
         <p class="text-gray-300 mt-2 text-sm">Watch International Space Station Live</p>
       </a>
-
-      <a href="starmap.html" class="glass-card hover:bg-opacity-60 transition duration-300 rounded-xl p-6 text-center hover:scale-105 transform shadow-lg hover-glow">
+      <a href="starmap.html" class="glass-card hover-glow transition duration-300 rounded-xl p-6 text-center shadow-lg">
         <div class="text-3xl mb-2">🌌</div>
         <h2 class="text-xl font-semibold text-teal-300">Star Map</h2>
         <p class="text-gray-300 mt-2 text-sm">Explore sky like Stellarium</p>
       </a>
-
+      <a href="isro-missions.html" class="glass-card hover-glow transition duration-300 rounded-xl p-6 text-center shadow-lg">
+        <div class="text-3xl mb-2">🇮🇳</div>
+        <h2 class="text-xl font-semibold text-teal-300">ISRO Missions</h2>
+        <p class="text-gray-300 mt-2 text-sm">Current and upcoming ISRO missions</p>
+      </a>
+      <a href="voyager.html" class="glass-card hover-glow transition duration-300 rounded-xl p-6 text-center shadow-lg">
+        <div class="text-3xl mb-2">🛸</div>
+        <h2 class="text-xl font-semibold text-teal-300">Voyager</h2>
+        <p class="text-gray-300 mt-2 text-sm">Voyager missions status and info</p>
+      </a>
+      <a href="telescopes.html" class="glass-card hover-glow transition duration-300 rounded-xl p-6 text-center shadow-lg">
+        <div class="text-3xl mb-2">🔭</div>
+        <h2 class="text-xl font-semibold text-teal-300">Telescopes</h2>
+        <p class="text-gray-300 mt-2 text-sm">JWST, Hubble, and more</p>
+      </a>
     </div>
   </main>
 
-  <!-- 🦾 Footer -->
-  <footer class="bg-black text-gray-500 py-4 text-sm text-center border-t border-teal-500/10">
-    ...MAde by SharmaGalactix...
+  <!-- Footer -->
+  <footer class="bg-black/80 text-gray-400 py-4 text-sm text-center border-t border-teal-500/20">
+    &copy; Made with ❤️ for space lovers.
   </footer>
 
+  <!-- Mobile Menu Script -->
+  <script>
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
 </body>
 </html>
-
-

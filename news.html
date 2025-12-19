@@ -4,69 +4,159 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>📰 Space News - Space Dashboard</title>
-
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Custom Styling -->
   <style>
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px #66fcf1; }
+      100% { text-shadow: 0 0 20px #66fcf1, 0 0 30px #66fcf1; }
+    }
+    .animate-glow {
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
     body {
-      background-color: #0b0c10;
+      background: url('https://images.unsplash.com/photo-1661705969607-cde73828023d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .glass-card {
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(102, 252, 241, 0.3);
+      border-radius: 1rem;
+    }
+    .news-item {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(102, 252, 241, 0.2);
+      transition: all 0.3s ease;
+    }
+    .news-item:hover {
+      box-shadow: 0 0 20px rgba(102, 252, 241, 0.4);
+      transform: translateY(-5px);
+    }
+    .navbar-link {
+      @apply relative;
+    }
+    .navbar-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #66fcf1;
+      transition: width 0.3s ease;
+    }
+    .navbar-link:hover::after,
+    .navbar-link.active::after {
+      width: 100%;
     }
   </style>
 </head>
 <body class="text-white font-sans min-h-screen flex flex-col">
-
-  <!-- 🌌 Navbar -->
-  <nav class="bg-gray-900 text-teal-300 px-6 py-4 shadow-md flex flex-wrap justify-center gap-6 text-lg">
-    <a href="index.html" class="hover:text-white transition">Home</a>
-    <a href="apod.html" class="hover:text-white transition">NASA APOD</a>
-    <a href="news.html" class="hover:text-white transition font-semibold">Space News</a>
-    <a href="iss.html" class="hover:text-white transition">ISS Tracker</a>
-    <a href="starmap.html" class="hover:text-white transition">Star Map</a>
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md border-b border-teal-500/30 z-50 px-4 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <h1 class="text-2xl font-bold text-teal-300 animate-glow">🚀 Space Dashboard</h1>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="index.html" class="navbar-link hover:text-teal-400 transition text-white">Home</a>
+        <a href="apod.html" class="navbar-link hover:text-teal-400 transition text-white">APOD</a>
+        <a href="news.html" class="navbar-link hover:text-teal-400 transition text-white active:text-teal-300 border-b-2 border-teal-300">News</a>
+        <a href="iss.html" class="navbar-link hover:text-teal-400 transition text-white">ISS</a>
+        <a href="starmap.html" class="navbar-link hover:text-teal-400 transition text-white">Star Map</a>
+        <a href="isro-missions.html" class="navbar-link hover:text-teal-400 transition text-white">ISRO Missions</a>
+        <a href="voyager.html" class="navbar-link hover:text-teal-400 transition text-white">Voyager</a>
+        <a href="telescopes.html" class="navbar-link hover:text-teal-400 transition text-white">Telescopes</a>
+      </div>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden text-teal-300 hover:text-teal-400">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 px-2 pb-4 bg-black/90 rounded-lg">
+      <a href="index.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Home</a>
+      <a href="apod.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">APOD</a>
+      <a href="news.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link active:border-b-2 border-teal-300">News</a>
+      <a href="iss.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">ISS</a>
+      <a href="starmap.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Star Map</a>
+      <a href="isro-missions.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">ISRO Missions</a>
+      <a href="voyager.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Voyager</a>
+      <a href="telescopes.html" class="block px-3 py-2 hover:text-teal-400 transition navbar-link">Telescopes</a>
+    </div>
   </nav>
 
-  <!-- 📰 Title -->
-  <main class="px-4 py-10 max-w-6xl mx-auto w-full">
-    <h1 class="text-3xl md:text-4xl font-bold text-teal-300 text-center mb-8 animate-pulse">📰 Latest Space News</h1>
+  <!-- Spacer for fixed navbar -->
+  <div class="pt-20"></div>
 
-    <!-- 📥 News Container -->
+  <!-- Title -->
+  <main class="px-4 py-10 max-w-6xl mx-auto w-full">
+    <!-- Extra Feature: News Filter -->
+    <div class="glass-card mb-6 p-4">
+      <h3 class="text-lg font-semibold text-teal-300 mb-2">Filter News</h3>
+      <select id="newsFilter" class="px-3 py-2 rounded-lg text-black mr-2">
+        <option value="">All</option>
+        <option value="NASA">NASA</option>
+        <option value="SpaceX">SpaceX</option>
+        <option value="ESA">ESA</option>
+        <option value="ISRO">ISRO</option>
+      </select>
+      <button onclick="filterNews()" class="bg-teal-500 hover:bg-teal-600 px-4 py-2 rounded-lg text-white">Filter</button>
+    </div>
+    <h1 class="text-3xl md:text-4xl font-bold text-teal-300 text-center mb-8 animate-glow">📰 Latest Space News</h1>
+    <!-- News Container -->
     <div id="spaceNews" class="grid gap-8 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"></div>
   </main>
 
-  <!-- 📜 Footer -->
-  <footer class="bg-gray-800 text-gray-400 text-center py-4 text-sm border-t border-gray-700">
-    ...MAde by SharmaGalactix...
+  <!-- Footer -->
+  <footer class="bg-black/80 text-gray-400 text-center py-4 text-sm border-t border-teal-500/20">
+    &copy; Made with ❤️ for space lovers.
   </footer>
 
-  <!-- 🛰️ JS Script -->
+  <!-- JS Script -->
   <script>
+    let allNews = [];
     async function getSpaceNews() {
       const newsDiv = document.getElementById("spaceNews");
       try {
         const res = await fetch("https://api.spaceflightnewsapi.net/v4/articles/?limit=18");
         const data = await res.json();
-        newsDiv.innerHTML = data.results.map(article => `
-          <div class="bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-700 hover:shadow-teal-500/20 transition">
-            <img src="${article.image_url}" alt="News Image" class="w-full h-48 object-cover" />
-            <div class="p-4">
-              <h2 class="text-lg font-semibold text-teal-300 mb-2">${article.title}</h2>
-              <p class="text-gray-300 text-sm mb-3">${article.summary.slice(0, 150)}...</p>
-              <a href="${article.url}" target="_blank" class="text-teal-400 hover:underline text-sm">🔗 Read More</a>
-            </div>
-          </div>
-        `).join('');
+        allNews = data.results;
+        displayNews(allNews);
       } catch (err) {
-        newsDiv.innerHTML = `<p class="text-red-500 text-center">❌ Error loading news: ${err.message}</p>`;
+        newsDiv.innerHTML = `<p class="text-red-500 text-center animate-glow">❌ Error loading news: ${err.message}</p>`;
       }
     }
-
-    // Load on page open
+    function displayNews(articles) {
+      const newsDiv = document.getElementById("spaceNews");
+      newsDiv.innerHTML = articles.map(article => `
+        <div class="news-item glass-card rounded-xl shadow-md overflow-hidden">
+          ${article.image_url ? `<img src="${article.image_url}" alt="News Image" class="w-full h-48 object-cover" />` : ''}
+          <div class="p-4">
+            <h2 class="text-lg font-semibold text-teal-300 mb-2">${article.title}</h2>
+            <p class="text-gray-300 text-sm mb-3">${article.summary.slice(0, 150)}...</p>
+            <a href="${article.url}" target="_blank" class="text-teal-400 hover:underline text-sm inline-flex items-center">🔗 Read More</a>
+            <p class="text-xs text-gray-500 mt-2">${new Date(article.publishedAt).toLocaleDateString()}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+    function filterNews() {
+      const filter = document.getElementById("newsFilter").value.toLowerCase();
+      const filtered = allNews.filter(article => !filter || article.title.toLowerCase().includes(filter) || (article.newsSite && article.newsSite.toLowerCase().includes(filter)));
+      displayNews(filtered);
+    }
     getSpaceNews();
-
-    // 🔁 Auto-refresh every 60 seconds
     setInterval(getSpaceNews, 60000);
-  </script>
 
+    // Mobile Menu
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
 </body>
 </html>
